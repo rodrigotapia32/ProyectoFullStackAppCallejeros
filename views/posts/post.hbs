@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 shadow-lg p-3 mb-5">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white">Registrarse</div>
+        <div class="card-body text-primary">
+          <form action="/report/add" method="POST">
+            <div class="mb-3">
+              <label>Foto</label>
+              <input type="file" name="foto" />
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Ubicacion</label>
+              <input id="address" name="address" type="text" class="form-control">
+            </div>
+            {{!-- <div class="mb-3">
+              <button onclick="findMe()">Ubicacion</button>
+              <div id="map"></div>
+              <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPmdwI79SDc94mhQw1BGj15zwf8Qj7IGI"></script>
+            </div> --}}
+            <div class="mb-3">
+              <label for="description" class="form-label">Descripcion</label>
+              <input id="description" name="description" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="card-footer bg-transparent border-primary">
+          <button class="btn btn-primary">Registrar</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!--
+<script>
+
+  function findMe() {
+    var output = document.getElementById('map');
+    //verifica si soporta geolocalizacion
+    if (navigator.geolocation) {
+      output.innerHTML = "<p>Tu navegador soporta geolocalizacion</p>";
+    } else {
+      output.innerHTML = "<p>Tu navegador no soporta geolocalizacion</p>";
+    }
+    //Obtener latitud y longitud
+    function localizacion(posicion) {
+      var latitude = posicion.coords.latitude;
+      var longitude = posicion.coords.longitude;
+      output.innerHTML = `<p>latitud:${latitude} longitud ${longitude} </p>`;
+
+    }
+    function error() {
+      output.innerHTML = "<p>no se pudo obtener tu ubicacion</p>";
+    }
+    navigator.geolocation.getCurrentPosition(localizacion, error);
+  }
+</script> --}}
