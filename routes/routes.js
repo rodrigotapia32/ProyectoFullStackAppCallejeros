@@ -6,31 +6,32 @@ router.get('/', (req, res) => {
     res.render('home')
 })
 
-router.get('/adopt', (req, res) => {
-    res.render('adopt')
-})
+// router.get('/adopt', (req, res) => {
+//     res.render('adopt')
+// })
 
 // router.get('/report', (req, res) => {
 //     res.render('report')
 // })
 
-router.get('/login', (req, res) => {
-    res.render('login')
-})
-router.post('/login', controller.login)
+// router.get('/login', (req, res) => {
+//     res.render('login')
+// })
 
-router.get('/register',(req, res) => {
-    res.render('register')
-})
+// router.post('/login', controller.login)
 
-router.post('/register', controller.registerUser)
+// router.get('/register',(req, res) => {
+//     res.render('register')
+// })
 
-router.get('/profile', (req, res) => {
-    res.render('profile')
-})
+// router.post('/register', controller.registerUser)
 
-router.get('/post', (req, res) => {
-    res.render('post')
-})
+// router.get('/profile', (req, res) => {
+//     res.render('profile')
+// })
+
+// router.get('/post', (req, res) => {
+//     res.render('post')
+// })
 
 module.exports = router

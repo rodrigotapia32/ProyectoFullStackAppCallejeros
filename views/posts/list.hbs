@@ -1,14 +1,27 @@
+<div class="container text-center pb-5">
+{{#if posts}}
+  <a href="/report/add" class="btn btn-success">Registrar otro</a>
+  <a href="/auth/profile" class="btn btn-danger">Volver al perfil</a>
+{{/if}}
+</div>
 {{#each posts}}
-<div class="card text-center mb-5 mr-5" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="{{photo}}">
-  <div class="card-body">
-    <h5 class="card-title">{{address}}</h5>
-    <p class="card-text">{{description}}</p>
-    <a href="" class="btn btn-danger">Delete</a>
-    <a href="" class="btn btn-secondary">Edit</a>
+<div class="d-flex d-inline-flex">
+  <div class="card text-center mb-5" style="width: 18rem;">
+    <img width="100px" src="/img/{{photo}}" class="card-img-top" alt="">
+    <div class="card-body">
+      <h5 class="card-title">{{address}}</h5>
+      <p class="card-text">{{description}}</p>
+      <p>{{timeago created_at}}</p>
+      <a href="/report/delete/{{id}}" class="btn btn-danger">Delete</a>
+      <a href="/report/edit/{{id}}" class="btn btn-secondary">Edit</a>
+    </div>
   </div>
 </div>
+{{else}}
+  <div class="col-md-4 mx-auto">
+    <div class="card card-body text-center">
+      <p>No has registrado callejeros</p>
+      <a href="/report/add">Registrar uno!</a>
+    </div>
+  </div>
 {{/each}}
-
-
-edicion prueba
