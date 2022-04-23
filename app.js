@@ -3,10 +3,21 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const upload = require('express-fileupload');
+const session = require('express-session');
+const { isLoggedIn } = require('./middleware/users');
+
+// Middlewares
+app.use(session({
+  secret: "secret",
+  resave: false,
+  saveUninitialized: false
+}))
 
 // Handlebars
-app.engine('hbs', exphbs.engine({extname: '.hbs'}));
+app.engine('hbs', exphbs.engine({
+  extname: '.hbs',
+  helpers: require('./lib/handlebars')
+}));
 app.set('view engine', 'hbs');
 
 // Setear la carpeta public para archivos estaticos
@@ -21,13 +32,9 @@ app.use(cookieParser());
 
 // Setear las rutas
 app.use('/', require('./routes/routes'));
-app.use('/report', require('./routes/posts'));
+app.use('/auth', require('./routes/authentication'));
+// app.use('/auth', require('./routes/auth'));
+app.use('/report', isLoggedIn, require('./routes/posts'));
 
-//Configurar express-fileupload
-app.use(upload({
-  limits: { fileSize: 5000000 },
-  abortOnLimit: true,
-  responseOnLimit: "El peso del archivo que intentas subir supera el limite permitido",
-}));
 
 app.listen(3000, () => console.log("SERVER ON http://localhost:3000"));

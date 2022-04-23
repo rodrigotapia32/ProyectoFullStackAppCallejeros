@@ -1,13 +1,23 @@
+<ul>
+  {{#if errors}}
+  <h4>Error de registro:</h4>
+  {{#each errors}}
+  <li>{{this.message}}</li>
+  {{/each}}
+  {{/if}}
+</ul>
+
 <div class="container">
   <div class="row">
     <div class="col-lg-12 shadow-lg p-3 mb-5">
       <div class="card border-primary">
-        <div class="card-header bg-primary text-white">Registrarse</div>
+        <div class="card-header bg-primary text-white">Registrar Callejero</div>
         <div class="card-body text-primary">
-          <form action="/report/add" method="POST">
+          <form action="/report/add" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
               <label>Foto</label>
-              <input type="file" name="foto" />
+              <img width="100px" src="/img/{{photo}}" class="card-img-top" alt="">
+              <input type="file" name="foto"/>
             </div>
             <div class="mb-3">
               <label for="address" class="form-label">Ubicacion</label>
@@ -26,6 +36,7 @@
         </div>
         <div class="card-footer bg-transparent border-primary">
           <button class="btn btn-primary">Registrar</button>
+          <a href="/auth/profile" class="btn btn-danger">Cancelar</a>
         </div>
         </form>
       </div>
