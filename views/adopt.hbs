@@ -1,0 +1,24 @@
+<h1 class="text-center">Animales Reportados</h1>
+
+<div class="container text-center pb-5">
+</div>
+{{#each posts}}
+<div class="d-flex d-inline-flex">
+  <div class="card text-center mb-5" style="width: 18rem;">
+    <img width="100px" src="/img/callejeros/{{photo}}" class="card-img-top" alt="">
+    <div class="card-body">
+      <h5 class="card-title bg-success p-2 text-dark bg-opacity-50">Ubicacion: {{address}}</h5>
+      <p class="card-text bg-success p-2 text-dark bg-opacity-25">Descripcion: {{description}}</p>
+      <p class="bg-success p-2 text-dark bg-opacity-10">Reportado hace: {{timeago created_at}}</p>
+
+    </div>
+  </div>
+</div>
+{{else}}
+  <div class="col-md-4 mx-auto">
+    <div class="card card-body text-center">
+      <p>No hay callejeros registrados</p>
+      <a href="/report/add">Registrar uno!</a>
+    </div>
+  </div>
+{{/each}}

@@ -19,7 +19,3 @@ description TEXT,
 created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
 userId INT REFERENCES users(id) 
 );
-
-
-INSERT INTO users(first_name, last_name, password, phone, email) VALUES ('rodrigo', 'tapia', '123', '3213213', 'r@gmail.com');
-INSERT INTO users(first_name, last_name, password, phone, email) VALUES ('g', 'g', 'g', 'g', 'a@gmail.com');
