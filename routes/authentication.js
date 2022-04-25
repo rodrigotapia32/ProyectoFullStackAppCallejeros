@@ -1,13 +1,19 @@
+// Rutas para manipular registro, login y autorizacion
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const conexion = require('../database/db.js');
-const flash = require('connect-flash');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const { isLoggedIn, validateRegister} = require('../middleware/users');
 
-const userMiddleware = require('../middleware/users');
-const { isLoggedIn } = require('../middleware/users');
-
-router.use(flash())
+// Configuracion nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'desafiolatamprueba@gmail.com',
+    pass: 'Alejandro32',
+  },
+})
 
 router.use((req, res, next) => {
   res.locals.message = req.session.message;
@@ -31,39 +37,55 @@ router.get('/login', (req, res) => {
 
 // Ruta que recibe los datos del formulario e inserta un usuario en la bd
 // http://localhost:3000/auth/register 
-router.post('/register', userMiddleware.validateRegister, async (req, res) => {
-  const { first_name, last_name, password, phone, email } = req.body
-  const errors = [];
-  const hashPassword = await bcrypt.hash(password, 8);
-  //Consulta para saber si el usuario esta registrado por email
-  conexion.query(
-    `SELECT * FROM users
+router.post('/register', validateRegister, async (req, res) => {
+  try {
+    const { first_name, last_name, password, phone, email } = req.body
+    const mailOptions = {
+      from: 'desafiolatamprueba@gmail.com',
+      to: email,
+      subject: 'Bienvenido a callejeros',
+      html: `<h1>Bienvenido ${first_name} ${last_name}</h1> 
+            <img src="https://cdn2.melodijolola.com/media/files/field/image/istock-1134106600.jpg" alt="">
+            `
+    }
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) console.log(err)
+      if (data) console.log(data)
+    })
+    const errors = [];
+    const hashPassword = await bcrypt.hash(password, 8);
+    //Consulta para saber si el usuario esta registrado por email
+    conexion.query(
+      `SELECT * FROM users
       WHERE email = $1`, [email], (err, results) => {
-    if (err) {
-      throw err
-    }
-    if (results.rows.length > 0) {
-      errors.push({ message: "El email ingresado ya esta registrado" })
-      res.render('auth/register', { errors })
-      //si el usuario no esta registrado
-    } else {
-      conexion.query(
-        `INSERT INTO users (first_name, last_name, password, phone, email)
-            VALUES ($1, $2, $3, $4, $5)`, [first_name, last_name, hashPassword, phone, email], (err, results) => {
-        if (err) {
-          throw err
-        }
-        req.session.message = {
-          type: 'info',
-          intro: 'Bienvenido',
-          message: 'ya estas registrado, ahora puedes Iniciar sesión'
-        }
-        res.redirect('/auth/login')
+      if (err) {
+        throw err
       }
-      )
+      if (results.rows.length > 0) {
+        errors.push({ message: "El email ingresado ya esta registrado" })
+        res.render('auth/register', { errors })
+        //si el usuario no esta registrado
+      } else {
+        conexion.query(
+          `INSERT INTO users (first_name, last_name, password, phone, email)
+            VALUES ($1, $2, $3, $4, $5)`, [first_name, last_name, hashPassword, phone, email], (err, results) => {
+          if (err) {
+            throw err
+          }
+          req.session.message = {
+            type: 'info',
+            intro: 'Bienvenido',
+            message: 'ya estas registrado, ahora puedes Iniciar sesión'
+          }
+          res.redirect('/auth/login')
+        }
+        )
+      }
     }
+    )
+  } catch (error) {
+    console.log(error)
   }
-  )
 }
 )
 
@@ -111,12 +133,12 @@ router.get('/profile', isLoggedIn, (req, res) => {
 
 // LOGOUT
 router.get('/logout', isLoggedIn, (req, res) => {
-req.session.destroy();
-res.redirect('/auth/login');
+  req.session.destroy();
+  res.redirect('/auth/login');
 })
 
 // Editar perfil
-router.get('/edit', (req, res) => {
+router.get('/edit', isLoggedIn, (req, res) => {
   res.send('editar datos')
 })
 

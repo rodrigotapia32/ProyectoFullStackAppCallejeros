@@ -1,20 +1,30 @@
+<ul>
+  {{#if errors}}
+  <h4>Error de registro:</h4>
+  {{#each errors}}
+  <li>{{this.message}}</li>
+  {{/each}}
+  {{/if}}
+</ul>
+
 <div class="container">
   <div class="row">
     <div class="col-lg-12 shadow-lg p-3 mb-5">
       <div class="card border-primary">
-        <div class="card-header bg-primary text-white">Registrarse</div>
+        <div class="card-header bg-primary text-white">Actualizar datos</div>
         <div class="card-body text-primary">
           <form action="/report/edit/{{posts.id}}" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
               <label>Foto</label>
               <input type="file" name="foto"/>
               <dir>
-                Foto Anterior: <img width="20%" src="/img/{{posts.photo}}" class="" alt="">
+                Foto Anterior: <img width="20%" src="/img/callejeros/{{posts.photo}}" class="" alt="">
               </dir>
             </div>
             <div class="mb-3">
-              <label for="address" class="form-label">Ubicacion</label>
-              <input value="{{posts.address}}" id="address" name="address" type="text" class="form-control">
+              {{!-- <label for="address" class="form-label">Ubicacion:</label> --}}
+              <label for="" class="text-danger">Datos anteriores: {{posts.address}}</label>
+              <input id="address" name="address" type="text" class="form-control" placeholder="Ingresar Ubicacion" >
             </div>
             {{!-- <div class="mb-3">
               <button onclick="findMe()">Ubicacion</button>
@@ -23,12 +33,16 @@
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPmdwI79SDc94mhQw1BGj15zwf8Qj7IGI"></script>
             </div> --}}
             <div class="mb-3">
-              <label for="description" class="form-label">Descripcion</label>
-              <input value="{{posts.description}}" id="description" name="description" type="text" class="form-control">
+              {{!-- <label for="description" class="form-label">Descripcion:</label> --}}
+              <label for="" class="text-danger">Datos anteriores: {{posts.description}}</label>
+              <input placeholder="Ingresar Descripcion" id="description" name="description" type="text" class="form-control">
             </div>
         </div>
         <div class="card-footer bg-transparent border-primary">
+          {{!-- {{#if errors}} --}}
           <button class="btn btn-primary">Actualizar</button>
+          {{!-- {{/if}} --}}
+          <a href="/report" class="btn btn-danger">Cancelar</a>
         </div>
         </form>
       </div>
