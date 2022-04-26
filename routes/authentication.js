@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const conexion = require('../database/db.js');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-const { isLoggedIn, validateRegister} = require('../middleware/users');
+const { isLoggedIn, validateRegister } = require('../middleware/users');
 
 // Configuracion nodemailer
 const transporter = nodemailer.createTransport({
@@ -138,8 +138,46 @@ router.get('/logout', isLoggedIn, (req, res) => {
 })
 
 // Editar perfil
-router.get('/edit', isLoggedIn, (req, res) => {
-  res.send('editar datos')
+router.get('/edit', isLoggedIn, async (req, res) => {
+  const { id } = req.user;
+  await conexion.query(`SELECT * FROM users WHERE id='${id}'`, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      const rows = result.rows[0]
+      res.render('auth/edit', { rows })
+    }
+  })
+})
+
+router.post('/edit', isLoggedIn, async (req, res) => {
+  const errors = []
+  const ok = []
+  const id = req.user.id
+  const { first_name, last_name, phone, email } = req.body
+  try {
+    if (!first_name || !last_name || !phone || !email) {
+      errors.push({ message: "Debes ingresar los nuevos datos" })
+      await conexion.query(`SELECT * FROM users WHERE id='${id}'`, (err, result) => {
+        const rows = result.rows[0]
+        res.render('auth/edit', { errors, rows })
+      })
+    } else {
+      await conexion.query(`UPDATE users SET first_name='${first_name}', 
+      last_name='${last_name}', 
+      phone='${phone}', 
+      email='${email}'
+      WHERE id='${id}'`)
+      ok.push({ message: "Datos actualizados" })
+      res.render('auth/profile', { ok })
+    }
+  } catch (error) {
+
+  }
+})
+
+router.get('/password', isLoggedIn,  (req, res) => {
+  res.render('auth/changePass')
 })
 
 module.exports = router;
