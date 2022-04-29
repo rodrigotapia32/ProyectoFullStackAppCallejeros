@@ -1,7 +1,7 @@
 <dir class="container">
   <h1 class="text-center">Editar datos</h1>
     {{#each errors}}
-    <span><h4 style="background-color: brown;">Error al editar valores:  {{this.message}}</h4></span>
+    <span><h4 style="background-color: rgb(244, 188, 188); border-radius: 5px;">Error al editar valores:  {{this.message}}</h4></span>
     {{/each}}
   <ul>
     {{#if ok}}
@@ -40,10 +40,12 @@
             </div>
         </div>
         <div class="card-footer bg-transparent border-primary">
-          <a href="/auth/profile" type="button" class="btn btn-secondary">Cancelar</a>
-          <button type="submit" class="btn btn-primary">Editar</button>\
-          <a href="/auth/password" class="btn btn-danger">Cambiar Password</a>
+          <button type="submit" class="btn btn-success">Editar</button>
+          <a href="/auth/profile" type="button" class="btn btn-primary">Cancelar</a>
+          <a href="/auth/password" class="btn btn-warning">Cambiar Password</a>
+          <a href="/auth/delete/{{rows.id}}" type="button" class="btn btn-danger">Eliminar cuenta</a>
         </div>
+        
         </form>
       </div>
     </div>

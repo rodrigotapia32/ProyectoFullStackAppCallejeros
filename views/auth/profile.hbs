@@ -3,7 +3,7 @@
 <ul>
   {{#if errors}}
   {{#each errors}}
-  <li>{{this.message}}</li>
+  <li style="background-color: rgb(244, 188, 188); border-radius: 5px;">{{this.message}}</li>
   {{/each}}
   {{/if}}
 </ul>
@@ -18,7 +18,7 @@
 
   {{#if user}}
   <h1>Bienvenido {{user.name}} a tu perfil</h1>
-  <h2 class="text-white">Que deseas hacer?</h2>
+  <h2 class="">Que deseas hacer?</h2>
   <a href="/report/add" class="btn btn-success">Reportar Callejero</a>
   <a href="/report" class="btn btn-primary">Ver mis callejeros</a>
   <a href="/auth/edit" class="btn btn-warning">Editar mis datos</a>

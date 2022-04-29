@@ -1,11 +1,12 @@
-<ul>
+
+<div>
   {{#if errors}}
   <h4>Error de registro:</h4>
   {{#each errors}}
-  <li>{{this.message}}</li>
+  <li style="background-color: rgb(244, 188, 188); border-radius: 5px;" class="mb-1">{{this.message}}</li>
   {{/each}}
   {{/if}}
-</ul>
+</div>
 
 
 <div class="container">
@@ -41,8 +42,8 @@
             </div>
         </div>
         <div class="card-footer bg-transparent border-primary">
-          <a href="/auth/login" type="button" class="btn btn-secondary">Cancelar</a>
-          <button type="submit" class="btn btn-primary">Registrar</button>
+          <button type="submit" class="btn btn-primary">Registrarse</button>
+          <a href="/auth/login" type="button" class="btn btn-danger">Cancelar</a>
         </div>
         </form>
       </div>

@@ -1,2 +1,15 @@
 <h1>Cambiar password</h1>
+<form action="/auth/password" method="POST">
+  <div class="container">
+    <div>
+      <label for="">Nueva Password</label>
+      <input type="text" name="newPassword">
+    </div>
+    <div>
+      <label for="">Confirmar Nueva Password</label>
+      <input type="text" name="newPassword2">
+    </div>
+  </div>
+<button class="btn btn-success">Cambiar</button>
 <a class="btn btn-danger" href="/auth/edit">Cancelar</a>
+</form>

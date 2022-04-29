@@ -5,7 +5,7 @@ module.exports = {
   validateRegister: (req, res, next) => {
     const { first_name, last_name, password, password2, phone, email } = req.body
     const errors = [];
-    if (!first_name || !last_name || !password || !phone || !email) {
+    if (!first_name || !last_name || !password || !password2 || !phone || !email) {
       errors.push({ message: "Por favor ingresa todos los datos" })
       res.status(400)
     }
