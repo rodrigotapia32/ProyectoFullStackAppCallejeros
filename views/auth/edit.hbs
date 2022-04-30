@@ -1,0 +1,57 @@
+<dir class="container">
+  <h1 class="text-center">Editar datos</h1>
+    {{#each errors}}
+    <span><h4 style="background-color: rgb(244, 188, 188); border-radius: 5px;">Error al editar valores:  {{this.message}}</h4></span>
+    {{/each}}
+  <ul>
+    {{#if ok}}
+    {{#each ok}}
+    <li>{{this.message}}</li>
+    {{/each}}
+    {{/if}}
+  </ul>
+</dir>
+
+
+{{#if rows}}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 shadow-lg p-3 mb-5">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white">Actualizar</div>
+        <div class="card-body text-primary">
+          <form action="/auth/edit" method="POST">
+            <div class="mb-3">
+              <label for="first_name" class="form-label">Nombre:</label>
+              <input placeholder="{{rows.first_name}}" id="first_name" name="first_name" type="text"
+                class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="last_name" class="form-label">Apellido:</label>
+              <input placeholder="{{rows.last_name}}" id="last_name" name="last_name" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Telefono:</label>
+              <input placeholder="{{rows.phone}}" id="phone" name="phone" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email:</label>
+              <input placeholder="{{rows.email}}" id="email" name="email" type="email" class="form-control">
+            </div>
+        </div>
+        <div class="card-footer bg-transparent border-primary">
+          <button type="submit" class="btn btn-success">Editar</button>
+          <a href="/auth/profile" type="button" class="btn btn-primary">Cancelar</a>
+          <a href="/auth/password" class="btn btn-warning">Cambiar Password</a>
+          <a href="/auth/delete/{{rows.id}}" type="button" class="btn btn-danger">Eliminar cuenta</a>
+        </div>
+        
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{{/if}}

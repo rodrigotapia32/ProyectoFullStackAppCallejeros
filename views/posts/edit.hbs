@@ -22,26 +22,16 @@
               </dir>
             </div>
             <div class="mb-3">
-              {{!-- <label for="address" class="form-label">Ubicacion:</label> --}}
               <label for="" class="text-danger">Datos anteriores: {{posts.address}}</label>
               <input id="address" name="address" type="text" class="form-control" placeholder="Ingresar Ubicacion" >
             </div>
-            {{!-- <div class="mb-3">
-              <button onclick="findMe()">Ubicacion</button>
-              <div id="map"></div>
-              <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPmdwI79SDc94mhQw1BGj15zwf8Qj7IGI"></script>
-            </div> --}}
             <div class="mb-3">
-              {{!-- <label for="description" class="form-label">Descripcion:</label> --}}
               <label for="" class="text-danger">Datos anteriores: {{posts.description}}</label>
               <input placeholder="Ingresar Descripcion" id="description" name="description" type="text" class="form-control">
             </div>
         </div>
         <div class="card-footer bg-transparent border-primary">
-          {{!-- {{#if errors}} --}}
           <button class="btn btn-primary">Actualizar</button>
-          {{!-- {{/if}} --}}
           <a href="/report" class="btn btn-danger">Cancelar</a>
         </div>
         </form>

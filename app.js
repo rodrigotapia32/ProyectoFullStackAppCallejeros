@@ -1,4 +1,3 @@
-// Entry point / root level
 // Raiz principipal, este es el primer archivo que se ejecuta
 const express = require('express');
 const app = express();

@@ -1,0 +1,42 @@
+<div class="container">
+  <h1 class="text-center">Contactanos</h1>
+  <ul>
+    {{#if errors}}
+    <h4>Error:</h4>
+    {{#each errors}}
+    <li>{{this.message}}</li>
+    {{/each}}
+    {{/if}}
+  </ul>
+  <div class="row">
+    <div class="col-lg-12 shadow-lg p-3 mb-5">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white">Contacto</div>
+        <div class="card-body text-primary">
+          <form action="/contact" method="POST">
+            <div class="mb-3">
+              <label for="first_name" class="form-label">Nombre</label>
+              <input id="first_name" name="first_name" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo</label>
+              <input id="email" name="email" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label">Asunto</label>
+              <input id="subject" name="subject" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Mensaje</label>
+              <input id="message" name="message" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="card-footer bg-transparent border-primary">
+          <button class="btn btn-primary">Enviar</button>
+          <a href="/" class="btn btn-danger">Cancelar</a>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

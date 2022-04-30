@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const conexion = require('../database/db.js');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-const { isLoggedIn, validateRegister} = require('../middleware/users');
+const { isLoggedIn, validateRegister } = require('../middleware/users');
 
 // Configuracion nodemailer
 const transporter = nodemailer.createTransport({
@@ -137,9 +137,90 @@ router.get('/logout', isLoggedIn, (req, res) => {
   res.redirect('/auth/login');
 })
 
-// Editar perfil
-router.get('/edit', isLoggedIn, (req, res) => {
-  res.send('editar datos')
+// Ruta que muestra un formulario para ditar un usuario
+// http://localhost:3000/auth/edit 
+router.get('/edit', isLoggedIn, async (req, res) => {
+  const { id } = req.user;
+  await conexion.query(`SELECT * FROM users WHERE id='${id}'`, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      const rows = result.rows[0]
+      res.render('auth/edit', { rows })
+    }
+  })
+})
+
+// Ruta que recibe los datos para editar un usuario
+// http://localhost:3000/auth/edit 
+router.post('/edit', isLoggedIn, async (req, res) => {
+  const errors = []
+  const ok = []
+  const id = req.user.id
+  const { first_name, last_name, phone, email } = req.body
+  try {
+    if (!first_name || !last_name || !phone || !email) {
+      errors.push({ message: "Debes ingresar los nuevos datos" })
+      await conexion.query(`SELECT * FROM users WHERE id='${id}'`, (err, result) => {
+        const rows = result.rows[0]
+        res.render('auth/edit', { errors, rows })
+      })
+    } else {
+      await conexion.query(`SELECT * FROM users WHERE email='${email}'`, async (err, result) => {
+        const rows = result.rows[0]
+        if(err){
+          console.log(err)
+        }else{
+          if(result.rows[0]) {
+            errors.push({message: "El correo ya existe"})
+            res.render('auth/edit', { rows, errors })
+          }else{
+            await conexion.query(`UPDATE users SET first_name='${first_name}', 
+            last_name='${last_name}', 
+            phone='${phone}', 
+            email='${email}'
+            WHERE id='${id}'`)
+            ok.push({ message: "Datos actualizados" })
+            res.render('auth/profile', { ok })
+          }
+        }
+      })
+    }
+  } catch (error) {
+  }
+})
+
+// Ruta que elimina la cuenta de un usuario
+// http://localhost:3000/auth/edit
+ router.get('/delete/:id', async (req, res) => {
+   const errors = []
+   const id = req.params.id
+   try {
+     await conexion.query(`DELETE FROM users WHERE id='${id}'`, (err, result) => {
+       if (err){
+         console.log(err)
+       }else{
+        errors.push({ message: "Usuario eliminado" })
+        res.render('auth/login', { errors })
+       }
+     })
+   } catch (error) {
+     console.log(error)
+   }
+ })
+
+// Ruta que muestra un formulario para cambiar una password
+// http://localhost:3000/auth/edit 
+router.get('/password', isLoggedIn,  (req, res) => {
+  res.render('auth/changePass')
+})
+
+// Ruta que recibe los datos para cambiar una password
+// http://localhost:3000/auth/edit 
+router.post('/password', isLoggedIn, (req, res) => {
+  console.log(req.body)
+  console.log(req.user)
+  res.send('Archivos recibidos')
 })
 
 module.exports = router;
