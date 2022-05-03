@@ -19,3 +19,5 @@ description TEXT NOT NULL,
 created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
 userId INT REFERENCES users(id) 
 );
+
+-- SELECT photo address, description, created_at, first_name, phone, email FROM users INNER JOIN posts ON users.id = posts.userId;

@@ -23,10 +23,18 @@ router.get('/', (req, res) => {
 // Ruta que renderea todos los callejeros reportados
 // http://localhost:3000/adopt
 router.get('/adopt', (req, res) => {
-    conexion.query('SELECT * FROM posts;', (err, result) => {
-        const posts = result.rows
-        res.render('adopt', { posts })
-    })
+    try {
+        conexion.query('SELECT users.id, photo, address, description, created_at, first_name, last_name, phone, email FROM users INNER JOIN posts ON users.id = posts.userId;', (err, result) => {
+            if (err) {
+                console.log(err.message)
+            }else{
+                const posts = result.rows
+                res.render('adopt', { posts })
+            }
+        })
+    } catch (error) {
+        console.log(error.message)
+    }
 })
 
 // Ruta que muestra un formulario para enviar un correo de contacto
@@ -53,5 +61,22 @@ router.post('/contact', validateRegisterContact, (req, res) => {
     res.render('thanks', { contact })
 })
 
+// Ruta que muestra los datos del usuario
+// http://localhost:3000/datos
+router.get('/datos/:id', (req, res) => {
+    const id = req.params.id
+    try {
+        conexion.query('SELECT * FROM users WHERE id= $1', [id], (err, result) => {
+            if (err) {
+                console.log(err.message)
+            } else {
+                const rows = result.rows
+                res.render('user', { rows })
+            }
+        })
+    } catch (error) {
+        console.log(error.message)
+    }
+})
 
 module.exports = router
