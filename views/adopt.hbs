@@ -7,18 +7,18 @@
   <div class="card text-center mb-5" style="width: 18rem;">
     <img width="100px" src="/img/callejeros/{{photo}}" class="card-img-top" alt="">
     <div class="card-body">
-      <h5 class="card-title bg-success p-2 text-dark bg-opacity-50">Ubicacion: {{address}}</h5>
-      <p class="card-text bg-success p-2 text-dark bg-opacity-25">Descripcion: {{description}}</p>
-      <p class="bg-success p-2 text-dark bg-opacity-10">Reportado hace: {{timeago created_at}}</p>
-
+      <h5 class="card-title bg-success p-2 text-white bg-opacity-90">Ubicacion: {{address}}</h5>
+      <p class="card-text bg-success p-2 text-white bg-opacity-75">Descripcion: {{description}}</p>
+      <p class="bg-success p-2 text-dark bg-opacity-50">Reportado por: <a href="/datos/{{id}}" class="btn btn-primary">Ver Datos</a></p>
+      <p class="bg-success p-2 text-dark bg-opacity-25">hace: {{timeago created_at}}</p>
     </div>
   </div>
 </div>
 {{else}}
-  <div class="col-md-4 mx-auto">
-    <div class="card card-body text-center">
-      <p>No hay callejeros reportados</p>
-      <a href="/report/add">Reportar uno!</a>
-    </div>
+<div class="col-md-4 mx-auto">
+  <div class="card card-body text-center">
+    <p>No hay callejeros reportados</p>
+    <a href="/report/add">Reportar uno!</a>
   </div>
+</div>
 {{/each}}

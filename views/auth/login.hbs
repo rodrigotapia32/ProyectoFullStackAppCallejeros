@@ -8,15 +8,13 @@
   {{/if}}
 </ul>
 
-<ul>
-  {{#if delete}}
-  <div style="text-align: center;" class="alert alert-{{message.type}}">
-    <strong>{{message.intro}}</strong> {{message.message}}
-    {{message}}
-    {{delete.message}}
-  </div>
+<div class="text-center">
+  {{#if userDelete}}
+  {{#each userDelete}}
+  <li style="background-color: rgb(244, 188, 188); border-radius: 5px;">{{this.message}}</li>
+  {{/each}}
   {{/if}}
-</ul>
+</div>
 
 <div class="text-center">
   {{#if errors}}

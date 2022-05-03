@@ -74,7 +74,7 @@ router.post('/register', validateRegister, async (req, res) => {
           }
           req.session.message = {
             type: 'info',
-            intro: 'Bienvenido',
+            intro: `Bienvenido ${first_name} ${last_name}`,
             message: 'ya estas registrado, ahora puedes Iniciar sesión'
           }
           res.redirect('/auth/login')
@@ -193,15 +193,15 @@ router.post('/edit', isLoggedIn, async (req, res) => {
 // Ruta que elimina la cuenta de un usuario
 // http://localhost:3000/auth/edit
  router.get('/delete/:id', async (req, res) => {
-   const errors = []
+   const userDelete = []
    const id = req.params.id
    try {
      await conexion.query(`DELETE FROM users WHERE id='${id}'`, (err, result) => {
        if (err){
          console.log(err)
        }else{
-        errors.push({ message: "Usuario eliminado" })
-        res.render('auth/login', { errors })
+        userDelete.push({ message: "Usuario eliminado" })
+        res.render('auth/login', { userDelete })
        }
      })
    } catch (error) {
